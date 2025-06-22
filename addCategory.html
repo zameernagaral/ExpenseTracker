@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Category</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/Assets/favicon/ExpenseTracker/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/Assets/favicon/ExpenseTracker/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/Assets/favicon/ExpenseTracker/favicon-16x16.png">
+<link rel="manifest" href="/Assets/favicon/ExpenseTracker/site.webmanifest">
+    <style>
+    :root {
+      --primary: #1976d2;
+      --secondary: #43a047;
+      --danger: #e53935;
+      --background: #f4f6fb;
+      --card-bg: #fff;
+      --text-main: #22223b;
+      --text-muted: #6c757d;
+      --accent: #fbc02d;
+      --border: #e0e0e0;
+      --shadow: 0 4px 24px rgba(25, 118, 210, 0.08);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: var(--background);
+      color: var(--text-main);
+      font-family: 'Poppins', Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overscroll-behavior: none;
+    }
+    .container {
+      background: var(--card-bg);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 36px 28px 28px 28px;
+      max-width: 380px;
+      width: 100%;
+      margin: 32px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    label {
+      font-size: 1.05rem;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      font-weight: 500;
+      text-align: left;
+    }
+    input[type="text"] {
+      padding: 12px 10px;
+      border-radius: 7px;
+      border: 1.5px solid var(--border);
+      font-size: 1.08em;
+      outline: none;
+      transition: border 0.18s;
+      margin-bottom: 6px;
+      background: #f9fafc;
+      color: var(--text-main);
+    }
+    input[type="text"]:focus {
+      border: 1.5px solid var(--primary);
+      background: #fff;
+    }
+    .submit {
+      background: var(--secondary);
+      color: #fff;
+      border: none;
+      padding: 12px 0;
+      border-radius: 8px;
+      font-size: 1.08em;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.18s, transform 0.15s;
+      box-shadow: 0 2px 8px rgba(67, 160, 71, 0.08);
+    }
+    .submit:hover, .submit:focus {
+      background: var(--accent);
+      color: var(--primary);
+      transform: scale(1.03);
+    }
+    .msg {
+      min-height: 22px;
+      font-size: 1em;
+      margin-top: 2px;
+      margin-bottom: 2px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: color 0.2s;
+    }
+    .msg.error {
+      color: var(--danger);
+    }
+    .msg.success {
+      color: var(--secondary);
+    }
+    @media (max-width: 500px) {
+      .container {
+        padding: 18px 6vw 18px 6vw;
+        max-width: 98vw;
+      }
+      h1 {
+        font-size: 1.3rem;
+      }
+    }
+    body.dark {
+            background: #181a1b;
+            color: #f1f1f1;
+        }
+        body.dark .settings-card {
+            background: #23272e;
+            color: #f1f1f1;
+        }
+        body.dark nav {
+            background: #23272e;
+        }
+        body.dark input, body.dark input:focus {
+            background: #23272e;
+            color: #f1f1f1;
+            border-color: #444;
+        }
+        body.dark li{
+            background: #23272e;
+            color: #f1f1f1;
+            border-color: #444;
+        }
+        body.dark .container{
+            background: #23272e;
+            color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add New Category</h1>
+        <label for="text">Enter Category Name</label>
+        <input type="text" name="text" id="text" maxlength="32" autocomplete="off" />
+        <div class="msg" id="msg"></div>
+        <button class="submit">Submit</button>
+    </div>
+    <script>
+      const text = document.getElementById('text');
+      const msg = document.getElementById('msg');
+      const submitBtn = document.querySelector('.submit');
+      let username = new URLSearchParams(window.location.search).get('username');
+      if (!username) {
+            window.location.href = "unauthorized.html";
+        }
+
+      // Focus input on load
+      text.focus();
+
+      // Helper: Show message
+      function showMsg(message, type = "error") {
+        msg.textContent = message;
+        msg.className = "msg " + type;
+      }
+
+      // Helper: Clear message
+      function clearMsg() {
+        msg.textContent = "";
+        msg.className = "msg";
+      }
+
+      // Submit handler
+      function handleSubmit() {
+        clearMsg();
+        let value = text.value.trim();
+        if (!value) {
+          showMsg("Category name cannot be empty.");
+          text.focus();
+          return;
+        }
+        if (value.length > 32) {
+          showMsg("Category name must be 32 characters or less.");
+          text.focus();
+          return;
+        }
+        let categoryData = JSON.parse(localStorage.getItem("categoryData")) || [];
+        let categoryFind = categoryData.find(c => c.username === username);
+        if (!categoryFind) {
+          // If user not found, create a new user entry
+          categoryFind = { username, items: [] };
+          categoryData.push(categoryFind);
+        }
+        // Prevent duplicate names (case-insensitive)
+        if (categoryFind.items.some(name => name.toLowerCase() === value.toLowerCase())) {
+          showMsg("Category name already exists.");
+          text.focus();
+          return;
+        }
+        categoryFind.items.push(value);
+        localStorage.setItem("categoryData", JSON.stringify(categoryData));
+        showMsg("Category added!", "success");
+        setTimeout(() => {
+          window.location.href = 'category.html?username=' + encodeURIComponent(username);
+        }, 600);
+      }
+
+      // Button click
+      submitBtn.addEventListener('click', handleSubmit);
+
+      // Enter key submits
+      text.addEventListener('keydown', e => {
+        if (e.key === "Enter") {
+          handleSubmit();
+        }
+      });
+      if (localStorage.getItem("darkMode") === "on") {
+                document.body.classList.add("dark");
+            }
+            else
+            {
+                document.body.classList.remove("dark");
+            }
+    </script>
+</body>
+</html>

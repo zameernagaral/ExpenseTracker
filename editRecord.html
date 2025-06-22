@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Record</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/Assets/favicon/ExpenseTracker/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/Assets/favicon/ExpenseTracker/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/Assets/favicon/ExpenseTracker/favicon-16x16.png">
+<link rel="manifest" href="/Assets/favicon/ExpenseTracker/site.webmanifest">
+
+    <style>
+        :root {
+            --primary: #1976d2;
+            --secondary: #43a047;
+            --danger: #e53935;
+            --background: #f4f6fb;
+            --card-bg: #fff;
+            --text-main: #22223b;
+            --accent: #fbc02d;
+            --border: #e0e0e0;
+        }
+        body {
+            background: var(--background);
+            color: var(--text-main);
+            font-family: 'Poppins', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overscroll-behavior:none;
+        }
+  
+::-webkit-scrollbar {
+    width: 8px;
+    background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 8px;
+}
+
+      
+ 
+        .container {
+            background: var(--card-bg);
+            border-radius: 18px;
+            box-shadow: 0 6px 32px rgba(25, 118, 210, 0.10);
+            padding: 36px 28px 28px 28px;
+            max-width: 400px;
+            width: 100%;
+            margin: 32px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .container label, .container p {
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--primary);
+        }
+        .moneybtns {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+        .moneybtn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.18s, transform 0.15s;
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.07);
+            outline: none;
+        }
+        .moneybtn:hover, .moneybtn:focus {
+            background: var(--accent);
+            color: var(--primary);
+            transform: scale(1.06);
+        }
+        .moneybtn.active {
+            background: var(--secondary);
+            color: #fff;
+        }
+        select, input[type="date"], input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            font-size: 1rem;
+            background: #fafbfc;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        select:focus, input:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 2px #fbc02d33;
+        }
+        .submit {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        #submit {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 36px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.18s, transform 0.15s;
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.07);
+        }
+        #submit:hover, #submit:focus {
+            background: var(--secondary);
+            color: #fff;
+            transform: scale(1.04);
+        }
+        .msg {
+            min-height: 22px;
+            font-size: 1em;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            transition: color 0.2s;
+            text-align: center;
+        }
+        .msg.error {
+            color: var(--danger);
+        }
+        .msg.success {
+            color: var(--secondary);
+        }
+        @media (max-width: 500px) {
+            .container {
+                padding: 16px 4vw 18px 4vw;
+                max-width: 98vw;
+            }
+            .moneybtn {
+                padding: 8px 10px;
+                font-size: 0.98rem;
+            }
+        }
+        body.dark {
+            background: #181a1b;
+            color: #f1f1f1;
+        }
+        body.dark .settings-card {
+            background: #23272e;
+            color: #f1f1f1;
+        }
+        body.dark nav {
+            background: #23272e;
+        }
+        body.dark input, body.dark input:focus {
+            background: #23272e;
+            color: #f1f1f1;
+            border-color: #444;
+        }
+        body.dark li{
+            background: #23272e;
+            color: #f1f1f1;
+            border-color: #444;
+        }
+        body.dark .container{
+            background: #23272e;
+            color: #f1f1f1;
+        }
+        body.dark #account{
+            background: #23272e;
+            color: #f1f1f1;
+        }
+        body.dark #category{
+            background: #23272e;
+            color: #f1f1f1;
+        }
+        body.dark #TransferTo{
+            background: #23272e;
+            color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <h2 style="text-align:center; margin-bottom:18px;">Edit Record</h2>
+    <div class="msg" id="msg"></div>
+    <div>
+        <label for="date">Date</label>
+        <input type="date" id="date" name="date">
+    </div>
+    <div class="moneybtns">
+        <button class="moneybtn" id="income" type="button">Income</button>
+        <button class="moneybtn" id="expense" type="button">Expense</button>
+        <button class="moneybtn" id="transfer" type="button">Transfer</button>
+    </div>
+    <div>
+        <label for="account">Account</label>
+        <select id="account"></select>
+    </div>
+    <div class="transferInput">
+        <label for="TransferTo">Transer To</label>
+        <select id="TransferTo"></select>
+    </div>
+    <div>
+        <label for="category">Category</label>
+        <select id="category"></select>
+    </div>
+    <div>
+        <label for="description">Description <span style="color:var(--text-muted);font-weight:400;">(Optional)</span></label>
+        <input type="text" id="description" name="description" maxlength="50" placeholder="E.g. Lunch at cafe">
+    </div>
+    <div>
+        <label for="amount">Amount</label>
+        <input type="number" id="amount" name="amount" min="0.01" step="0.01" placeholder="0.00">
+    </div>
+    <div class="submit">
+        <button id="submit">Save Changes</button>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const msg = document.getElementById('msg');
+        const username = new URLSearchParams(window.location.search).get('username');
+        const index = parseInt(new URLSearchParams(window.location.search).get('index'), 10);
+        const daten = new URLSearchParams(window.location.search).get('date');
+        if (!username || isNaN(index) || !daten) {
+            window.location.href = 'unauthorized.html';
+            return;
+        }
+        let transferTo = document.getElementById('TransferTo');
+        let transferInput = document.querySelector('.transferInput');
+        transferInput.style.display = "none";
+        // Get data from localStorage
+        let record = localStorage.getItem('record') ? JSON.parse(localStorage.getItem('record')) : [];
+        let recordFind = record.find(r => r.username === username && r.date === daten);
+
+        let accountData = JSON.parse(localStorage.getItem("accountData")) || [];
+        let categoryData = JSON.parse(localStorage.getItem("categoryData")) || [];
+        let accountFind = accountData.find(c => c.username === username);
+        let categoryFind = categoryData.find(c => c.username === username);
+
+        // DOM elements
+        let date = document.getElementById('date');
+        let amount = document.getElementById('amount');
+        let account = document.getElementById('account');
+        let category = document.getElementById('category');
+        let description = document.getElementById('description');
+        let submitBtn = document.getElementById('submit');
+
+        // Helper: Show message
+        function showMsg(message, type = "error") {
+            msg.textContent = message;
+            msg.className = "msg " + type;
+        }
+        function clearMsg() {
+            msg.textContent = "";
+            msg.className = "msg";
+        }
+        document.querySelectorAll('.moneybtn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (btn.textContent === "Transfer") {
+                    transferInput.style.display = "block";
+
+                }
+                else {
+                    transferInput.style.display = "none";
+                }
+            });
+        });
+
+        // Populate accounts
+        account.innerHTML = '';
+        if (accountFind && Array.isArray(accountFind.items) && accountFind.items.length > 0) {
+            accountFind.items.forEach(item => {
+                let option = document.createElement('option');
+                option.value = item;
+                option.textContent = item;
+                account.appendChild(option);
+            });
+        } else {
+            let option = document.createElement('option');
+            option.value = "";
+            option.textContent = "No accounts found";
+            account.appendChild(option);
+            account.disabled = true;
+        }
+
+        // Populate categories
+        category.innerHTML = '';
+        if (categoryFind && Array.isArray(categoryFind.items) && categoryFind.items.length > 0) {
+            categoryFind.items.forEach(item => {
+                let option = document.createElement('option');
+                option.value = item;
+                option.textContent = item;
+                category.appendChild(option);
+            });
+        } else {
+            let option = document.createElement('option');
+            option.value = "";
+            option.textContent = "No categories found";
+            category.appendChild(option);
+            category.disabled = true;
+        }
+
+        // Fill form with existing record data
+        if (recordFind && recordFind.type && recordFind.account && recordFind.category && recordFind.description && recordFind.amount) {
+            date.value = recordFind.date;
+            amount.value = recordFind.amount[index];
+            description.value = recordFind.description[index];
+            // Set account and category if available
+            if (!account.disabled) account.value = recordFind.account[index];
+            if (!category.disabled) category.value = recordFind.category[index];
+            // Set type button
+            document.querySelectorAll('.moneybtn').forEach(btn => btn.classList.remove('active'));
+            if (recordFind.type[index] && document.getElementById(recordFind.type[index])) {
+                document.getElementById(recordFind.type[index]).classList.add('active');
+            }
+        } else {
+            showMsg("Record not found.", "error");
+            submitBtn.disabled = true;
+            return;
+        }
+
+        // Money type buttons
+        document.querySelectorAll('.moneybtn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.moneybtn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        let accountValue = document.getElementById('account');
+        accountValue.innerHTML = '';
+        if (accountFind && Array.isArray(accountFind.items) && accountFind.items.length > 0) {
+            accountFind.items.forEach(item => {
+                let option = document.createElement('option');
+                option.value = item;
+                option.textContent = item;
+                transferTo.appendChild(option);
+                
+
+            });
+            accountFind.items.forEach(item => {
+                let option = document.createElement('option');
+                option.value = item;
+                option.textContent = item;
+                accountValue.appendChild(option);
+                
+
+            });
+        }
+        
+        // Save handler
+        function handleSave() {
+            clearMsg();
+            const date1 = date.value;
+            const accountVal = account.value;
+            const categoryVal = category.value;
+            const descriptionVal = description.value.trim();
+            const amountVal = amount.value.trim();
+            const typeVal = document.querySelector('.moneybtn.active').id;
+         
+
+            // Validation
+            if (!date1) {
+                showMsg("Please select a date.");
+                date.focus();
+                return;
+            }
+            if (account.disabled) {
+                showMsg("Please add an account first.");
+                return;
+            }
+            if (category.disabled) {
+                showMsg("Please add a category first.");
+                return;
+            }
+            if (!amountVal || isNaN(amountVal) || Number(amountVal) <= 0) {
+                showMsg("Please enter a valid amount.");
+                amount.focus();
+                return;
+            }
+            if (descriptionVal.length > 50) {
+                showMsg("Description is too long. Please limit it to 50 characters.");
+                description.focus();
+                return;
+            }
+
+            // Update record
+            recordFind.date = date1;
+            recordFind.type[index] = typeVal;
+            recordFind.account[index] = accountVal;
+            recordFind.category[index] = categoryVal;
+            recordFind.description[index] = descriptionVal;
+            recordFind.amount[index] = amountVal;
+
+            localStorage.setItem('record', JSON.stringify(record));
+            showMsg("Record updated!", "success");
+            setTimeout(() => {
+                window.location.href = 'indexM.html?username=' + encodeURIComponent(username);
+            }, 700);
+        }
+
+        submitBtn.addEventListener('click', handleSave);
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Enter" && (document.activeElement.tagName !== "TEXTAREA")) {
+                handleSave();
+            }
+        });
+        if (localStorage.getItem("darkMode") === "on") {
+                document.body.classList.add("dark");
+            }
+            else
+            {
+                document.body.classList.remove("dark");
+            }
+    });
+  </script>
+</body>
+</html>

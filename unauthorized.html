@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unauthorized User</title>
+    <style>
+        :root {
+            --primary: #1976d2;
+            --secondary: #43a047;
+            --danger: #e53935;
+            --background: #f4f6fb;
+            --card-bg: #fff;
+            --text-main: #22223b;
+            --text-muted: #6c757d;
+            --accent: #fbc02d;
+            --border: #e0e0e0;
+            --shadow: 0 4px 24px rgba(25, 118, 210, 0.08);
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: var(--background);
+            color: var(--text-main);
+            font-family: 'Poppins', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overscroll-behavior: none;
+            transition: background 0.3s, color 0.3s;
+        }
+        body.dark {
+            background: #181a1b;
+            color: #f1f1f1;
+        }
+        .container {
+            background: var(--card-bg);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            padding: 36px 28px 28px 28px;
+            max-width: 380px;
+            width: 100%;
+            margin: 32px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            text-align: center;
+            align-items: center;
+            transition: background 0.3s, color 0.3s;
+        }
+        body.dark .container {
+            background: #23272e;
+            color: #f1f1f1;
+        }
+        .warning-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 10px auto;
+            display: block;
+            animation: popIn 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.2); opacity: 0; }
+            70% { transform: scale(1.15); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--danger);
+            margin-bottom: 6px;
+        }
+        p {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+        .btns {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        a, button {
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 22px;
+            border-radius: 8px;
+            background: var(--secondary);
+            color: #fff;
+            transition: background 0.18s, transform 0.15s, color 0.18s;
+            border: none;
+            cursor: pointer;
+            font-size: 1.08rem;
+            box-shadow: 0 2px 8px rgba(67, 160, 71, 0.08);
+            outline: none;
+            margin-top: 4px;
+        }
+        a:focus, button:focus {
+            outline: 2px solid var(--accent);
+        }
+        a:hover, button:hover, a:focus, button:focus {
+            background: var(--accent);
+            color: var(--primary);
+            transform: scale(1.05);
+        }
+ 
+::-webkit-scrollbar {
+    width: 8px;
+    background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 8px;
+}
+
+      
+ 
+        @media (max-width: 500px) {
+            .container {
+                padding: 18px 4vw 18px 4vw;
+                max-width: 98vw;
+            }
+            .btns {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <svg class="warning-icon" viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="32" fill="#e53935" opacity="0.15"/>
+            <circle cx="32" cy="32" r="28" fill="#e53935"/>
+            <path d="M32 18v18" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="32" cy="44" r="3" fill="#fff"/>
+        </svg>
+        <h1>Unauthorized User</h1>
+        <p>You are not authorized to access this page.</p>
+        <p>Please log in to continue.</p>
+        <div class="btns">
+            <a href="index.html" tabindex="0">Login</a>
+            <button id="goBackBtn" tabindex="0">Go Back</button>
+        </div>
+    </div>
+    <script>
+        // Dark mode support if user has it enabled
+        if (localStorage.getItem("darkMode") === "on") {
+            document.body.classList.add("dark");
+        }
+        // Go Back button
+        document.getElementById('goBackBtn').addEventListener('click', function() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+        // Keyboard accessibility for Go Back
+        document.getElementById('goBackBtn').addEventListener('keyup', function(e) {
+            if (e.key === "Enter" || e.key === " ") this.click();
+        });
+    </script>
+</body>
+</html>
+
+//6168 line of code|| 19 files||Expense Tracker || 26 May 2025 12:20PM😊😊😊

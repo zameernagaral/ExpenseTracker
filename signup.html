@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <style>
+ :root {
+    --base-color: #1A2E45;
+    --light-color: #F9F9F9;
+    --dark-color: #2D2D2D;
+    --neutral-color: #D1D5DB;
+    --accent-color: #F5A623;
+    --primary-gradient: linear-gradient(135deg, #1A2E45 0%, #4A90E2 100%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--neutral-color);
+    color: var(--dark-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--base-color);
+    font-weight: 700;
+}
+
+a {
+    color: var(--base-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+.login {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 32px rgba(26, 46, 69, 0.13);
+    padding: 32px 28px 24px 28px;
+    margin-top: 10vh;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.login h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.loginForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 0;
+}
+
+.loginForm input {
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--neutral-color);
+    background: var(--light-color);
+    color: var(--dark-color);
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.loginForm input:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 2px #f5a62333;
+}
+
+.loginForm button,
+input[type="submit"] {
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background: var(--base-color);
+    color: var(--light-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(26, 46, 69, 0.07);
+}
+
+.loginForm button:hover,
+input[type="submit"]:hover {
+    background: var(--accent-color);
+    color: var(--base-color);
+    transform: scale(1.03);
+}
+
+.error,
+.usernameError,
+.passwordError,
+.invalidError {
+    display: none;
+    color: #721c24;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 8px 12px;
+    margin: 0 0 8px 0;
+    text-align: center;
+}
+
+.error[style*="display: block"],
+.usernameError[style*="display: block"],
+.passwordError[style*="display: block"],
+.invalidError[style*="display: block"] {
+    display: block;
+}
+
+@media (max-width: 600px) {
+    .login {
+        padding: 18px 6vw 16px 6vw;
+        margin-top: 4vh;
+        max-width: 98vw;
+    }
+
+    .login h1 {
+        font-size: 1.5rem;
+    }
+
+    .loginForm input,
+    .loginForm button,
+    input[type="submit"] {
+        font-size: 1rem;
+        padding: 10px;
+    }
+}
+body.dark {
+            background: #181a1b;
+            color: #f1f1f1;
+        }
+        body.dark .settings-card {
+            background: #23272e;
+            color: #f1f1f1;
+        }
+        body.dark nav {
+            background: #23272e;
+        }
+        body.dark input, body.dark input:focus {
+            background: #23272e;
+            color: #f1f1f1;
+            border-color: #444;
+        }
+        body.dark li{
+            background: #23272e;
+            color: #f1f1f1;
+            border-color: #444;
+        }
+        body.dark .login{
+            background: #23272e;
+            color: #f1f1f1;
+        }
+        body.dark h1{
+            color: #f1f1f1;
+        }
+        body.dark a{
+            color: #f1f1f1;
+        }
+        body.dark a:hover{
+            color: #fbc02d;
+            text-decoration: underline;
+        }
+     
+::-webkit-scrollbar {
+    width: 8px;
+    background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 8px;
+}
+
+      
+ 
+    </style>
+</head>
+
+<body>
+
+    <div class="login">
+        <h1>Sign Up</h1>
+        <p class="error invalidError"></p>
+        <div class="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" class="username">
+            <p class="usernameError error"></p>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <p class="passwordError error"></p>
+            
+            <button id="loginButton">Sign Up</button>
+        </div>
+        <p>Already have an account? <a href="index.html">Login</a></p>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+    const loginButton = document.getElementById('loginButton');
+    const usernameInput = document.querySelector('.username');
+    const passwordInput = document.querySelector('#password');
+    const usernameError = document.querySelector('.usernameError');
+    const passwordError = document.querySelector('.passwordError');
+    const invalidError = document.querySelector('.invalidError');
+
+    // Load existing data from localStorage
+    let userdata = JSON.parse(localStorage.getItem('loggersData')) || []; // Load existing data or initialize as an empty array
+
+    loginButton.addEventListener('click', function() {
+        if (usernameInput.value.trim() === '') {
+            usernameError.textContent = 'Username is required.';
+            usernameError.style.display = 'block';
+        } else {
+            usernameError.style.display = 'none';
+        }
+
+        if (passwordInput.value.trim() === '') {
+            passwordError.textContent = 'Password is required.';
+            passwordError.style.display = 'block';
+        } else {
+            passwordError.style.display = 'none';
+        }
+
+        if (usernameInput.value.trim() !== '' && passwordInput.value.trim() !== '') {
+            // Check if the username already exists
+            const existingUser = userdata.find(user => user.username === usernameInput.value.trim());
+            if (existingUser) {
+                invalidError.textContent = 'Username already exists. Please choose to Login.';
+                invalidError.style.display = 'block';
+            } else {
+                invalidError.style.display = 'none';
+
+                // Add the new user to the userdata array
+                const newUser = {
+                    username: usernameInput.value.trim(),
+                    password: passwordInput.value.trim(),
+                    cartid: []
+                };
+                userdata.push(newUser);
+                savedata();
+            }
+        }
+    });
+
+    function savedata() {
+        // Save the updated userdata array to localStorage
+        const data = JSON.stringify(userdata);
+        localStorage.setItem('loggersData', data);
+
+        // Clear the input fields and hide error messages
+        usernameInput.value = '';
+        passwordInput.value = '';
+        usernameError.style.display = 'none';
+        passwordError.style.display = 'none';
+        invalidError.style.display = 'none';
+
+        alert('User registered successfully!, Kindly Login');
+        window.location.href = 'index.html'; // Redirect to the login page
+    }
+    username.addEventListener("click", function () {
+        usernameError.style.display = "none";
+        username.style.border = "1px solid #ccc"; // Reset border color
+    });
+    password.addEventListener("click", function () {
+        passwordError.style.display = "none";
+        password.style.border = "1px solid #ccc"; // Reset border color
+    });
+    if (localStorage.getItem("darkMode") === "on") {
+                document.body.classList.add("dark");
+            }
+            else
+            {
+                document.body.classList.remove("dark");
+            }
+});
+    </script>
+</body>
+</html>
